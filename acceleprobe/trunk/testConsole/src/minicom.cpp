@@ -131,7 +131,7 @@ int main(int argc, char* argv[])
 		}
 		boost::asio::io_service io_service;
 		// define an instance of the main class of this program
-		minicom c(io_service, boost::lexical_cast<unsigned int>(300),"/dev/pts/2");
+		minicom c(io_service, boost::lexical_cast<unsigned int>(300),"/dev/ttyUSB0");
 		// run the IO service as a separate thread, so the main thread can block on standard input
 		boost::thread
 				t(boost::bind(&boost::asio::io_service::run, &io_service));
