@@ -1,0 +1,7 @@
+#Tue Dec 07 20:24:34 PST 2010
+eclipse.preferences.version=1
+environment/project/org.eclipse.cdt.cross.arm.gnu.linux.elf.release.1375875244/PATH/delimiter=\:
+environment/project/org.eclipse.cdt.cross.arm.gnu.linux.elf.release.1375875244/PATH/operation=replace
+environment/project/org.eclipse.cdt.cross.arm.gnu.linux.elf.release.1375875244/PATH/value=/home/dejagerd/arm-2010.09/bin\:/usr/local/stm32/bin\:/home/dejagerd/codesourcery/sourcery_g++_lite/bin\:/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/usr/games
+environment/project/org.eclipse.cdt.cross.arm.gnu.linux.elf.release.1375875244/append=true
+environment/project/org.eclipse.cdt.cross.arm.gnu.linux.elf.release.1375875244/appendContributed=true
