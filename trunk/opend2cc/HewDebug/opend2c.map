@@ -1,0 +1,10 @@
+Archive member included because of file (symbol)
+
+libopend2c.a(malloc.o)        ./src/dcc_link.o (malloc)
+libopend2c.a(mallocr.o)       libopend2c.a(malloc.o) (_free_r)
+libopend2c.a(memmove.o)       libopend2c.a(mallocr.o) (memmove)
+libopend2c.a(memset.o)        libopend2c.a(mallocr.o) (memset)
+libopend2c.a(mlock.o)         libopend2c.a(mallocr.o) (__malloc_lock)
+libopend2c.a(sbrkr.o)         libopend2c.a(mallocr.o) (_sbrk_r)
+libopend2c.a(impure.o)        libopend2c.a(malloc.o) (_impure_ptr)
+libopend2c.a(reent.o)         libopend2c.a(sbrkr.o) (errno)

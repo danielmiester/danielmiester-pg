@@ -1,0 +1,79 @@
+   1                             		.file	"librarysupport.c"
+   9                             	.Ltext0:
+  10                             		.local	_heap_area
+  11                             		.comm	_heap_area,1024,4
+  12                             		.section D,"aw",@progbits
+  13                             		.p2align 2
+  14                             		.balign 4
+  17                             	_brk:
+  18 0000 00 00 00 00             		.long	_heap_area
+  19                             		.section P,"ax"
+  20                             		.global	_sbrk
+  22                             	_sbrk:
+  23                             	.LFB0:
+  24                             		.file 1 "../src/librarysupport.c"
+   1:../src/librarysupport.c **** #include <stddef.h>
+   2:../src/librarysupport.c **** #include <stdio.h>
+   3:../src/librarysupport.c **** 
+   4:../src/librarysupport.c **** #define HEAPSIZE 0x400
+   5:../src/librarysupport.c **** signed char *sbrk(size_t size);
+   6:../src/librarysupport.c **** union HEAP_TYPE {
+   7:../src/librarysupport.c **** 	signed long dummy;
+   8:../src/librarysupport.c **** 	signed char heap[HEAPSIZE];
+   9:../src/librarysupport.c **** };
+  10:../src/librarysupport.c **** static union HEAP_TYPE heap_area;
+  11:../src/librarysupport.c **** /* End address allocated by sbrk */
+  12:../src/librarysupport.c **** static signed char *brk=(signed char *)&heap_area;
+  13:../src/librarysupport.c **** signed char *sbrk(size_t size)
+  14:../src/librarysupport.c **** {
+  25                             		.loc 1 14 0
+  26 0000 6E 6B                   		pushm	r6-r11
+  27                             	.LCFI0:
+  28 0002 71 06 F8                		add	#-8, r0, r6
+  29                             	.LCFI1:
+  30 0005 EF 60                   		mov.L	r6, r0
+  31                             	.LCFI2:
+  32 0007 A0 69                   		mov.L	r1, 4[r6]
+  15:../src/librarysupport.c **** 	signed char *p;
+  16:../src/librarysupport.c **** 	if(brk+size > heap_area.heap+HEAPSIZE) {
+  33                             		.loc 1 16 0
+  34 0009 FB A2 00 00 00 00       		mov.L	#_brk, r10
+  35 000f EC AA                   		mov.L	[r10], r10
+  36 0011 06 89 6A 01             		add	4[r6].L, r10
+  37 0015 FB B2 00 04 00 00       		mov.L	#_heap_area+1024, r11
+  38 001b 47 BA                   		cmp	r11, r10
+  39 001d 25 0B                   		bleu	.L2
+  40 001f 03                      		nop
+  17:../src/librarysupport.c **** 	p = (signed char *)-1;
+  41                             		.loc 1 17 0
+  42 0020 F8 66 FF                		mov.L	#-1, [r6]
+  43 0023 2E 25                   		bra	.L3
+  44 0025 FC 13 00                		.balign 8,3,5
+  45                             	.L2:
+  18:../src/librarysupport.c **** 	}
+  19:../src/librarysupport.c **** 	else {
+  20:../src/librarysupport.c **** 		p = brk;
+  46                             		.loc 1 20 0
+  47 0028 FB A2 00 00 00 00       		mov.L	#_brk, r10
+  48 002e EC AA                   		mov.L	[r10], r10
+  49 0030 E3 6A                   		mov.L	r10, [r6]
+  21:../src/librarysupport.c **** 		brk += size;
+  50                             		.loc 1 21 0
+  51 0032 FB A2 00 00 00 00       		mov.L	#_brk, r10
+  52 0038 EC AA                   		mov.L	[r10], r10
+  53 003a ED 6B 01                		mov.L	4[r6], r11
+  54 003d 4B AB                   		add	r10, r11
+  55 003f FB A2 00 00 00 00       		mov.L	#_brk, r10
+  56 0045 E3 AB                   		mov.L	r11, [r10]
+  57 0047 03                      		.balign 8,3,1
+  58                             	.L3:
+  22:../src/librarysupport.c **** 	}
+  23:../src/librarysupport.c **** 	return p;
+  59                             		.loc 1 23 0
+  60 0048 EC 6A                   		mov.L	[r6], r10
+  24:../src/librarysupport.c **** }
+  61                             		.loc 1 24 0
+  62 004a EF A1                   		mov.L	r10, r1
+  63 004c 3F 6B 08                		rtsd	#32, r6-r11
+  64                             	.LFE0:
+ 117                             	.Letext0:

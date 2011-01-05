@@ -25,8 +25,8 @@ Edgewood WA 98372
 
 #ifndef DCC_LINK_H_
 #define DCC_LINK_H_
-#define DCC_PORT (PORTD->DR->BIT->B0)
-const int SMA_AVERAGE_N = 8;
+#define DCC_PORT (PORTD.DR.BIT.B0)
+
 typedef struct{
 	int dc_component;
 	short dc_setting;
@@ -34,12 +34,20 @@ typedef struct{
 	union {
 		unsigned char VAL;
 		struct{
+			unsigned int DATA:1;
 			unsigned int ESTOP:1;
-			unsigned int :7;
+			unsigned int :6;
 		};
 	};
 }dccdata_td;
-dccdata_td dccData;
+dccdata_td * dccData;
+extern volatile unsigned char waitingForInterrupt;
+extern volatile unsigned char phase;
+
+
+
+
+
 /**
  * initializes the DCC subsystem.
  */
@@ -49,12 +57,8 @@ void dccInit(void);
  * Transmits a 0 with the specified duty cycle
  * 0 is 50%
  */
-void dccTransmit0(void);
-/**
- * Transmits a 1
- */
-void dccTransmit1(void);
-void dccIdle(void);
+void dccPoll(void);
 void ema( int new);
-
+inline void delay(unsigned short usecs);
+void INT_Excep_CMTU0_CMI0(void)__attribute__ ((interrupt));
 #endif /* DCC_LINK_H_ */
