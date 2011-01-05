@@ -89,7 +89,7 @@ void  INT_Excep_FCU_FRDYI(void){ }
 
 void  INT_Excep_ICU_SWINT(void){ }				
 //;0x0070  CMTU0_CMT0									
-void  INT_Excep_CMTU0_CMI0(void){ }
+//void  INT_Excep_CMTU0_CMI0(void){ }
 //;0x0074  CMTU0_CMT1
 void  INT_Excep_CMTU0_CMI1(void){ }
 //;0x0078  CMTU1_CMT2

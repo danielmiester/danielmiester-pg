@@ -12,15 +12,15 @@
 																							
 #define __RX_LITTLE_ENDIAN__ 1
 #include "iodefine.h"
-
+#include "dcc_link.h"
 
 
 int main(void)
 {
     // TODO: add application code here
-
+	dccInit();
     while (1) {
-
+    	dccPoll();
     }
   return 0;
 }

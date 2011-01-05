@@ -31,7 +31,7 @@ void INT_NonMaskableInterrupt(void) __attribute__ ((interrupt));
 void Dummy (void) __attribute__ ((interrupt));
 
 // BRK
-void INT_Excep_BRK(void) __attribute__ ((interrupt));
+void INT_Excep_BRK(void) __attribute__ ((weak,interrupt));
 //;0x0000  Reserved
     
 //;0x0004  Reserved

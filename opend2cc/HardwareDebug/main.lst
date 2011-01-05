@@ -1,10 +1,23 @@
    1                             		.file	"main.c"
    9                             	.Ltext0:
   10                             		.comm	_dccData,4,4
-  11                             		.global	_main
-  13                             	_main:
-  14                             	.LFB0:
-  15                             		.file 1 "../src/main.c"
+  11                             		.global	_SMA_AVERAGE_N
+  12                             		.section C,"a",@progbits
+  13                             		.p2align 2
+  14                             		.balign 4
+  17                             	_SMA_AVERAGE_N:
+  18 0000 08 00 00 00             		.long	8
+  19                             		.comm	_waitingForInterrupt,1,1
+  20                             		.global	_phase
+  21                             		.section B,"w",@nobits
+  22                             		.p2align 2
+  25                             	_phase:
+  26 0000 00                      		.zero	1
+  27 0001 00 00 00                		.section P,"ax"
+  28                             		.global	_main
+  30                             	_main:
+  31                             	.LFB0:
+  32                             		.file 1 "../src/main.c"
    1:../src/main.c **** /***********************************************************************/
    2:../src/main.c **** /*  													               */
    3:../src/main.c **** /*      PROJECT NAME :  opend2c                                        */
@@ -24,23 +37,21 @@
   17:../src/main.c **** 
   18:../src/main.c **** int main(void)
   19:../src/main.c **** {
-  16                             		.loc 1 19 0
-  17 0000 7E A6                   		push.l	r6
-  18                             	.LCFI0:
-  19 0002 EF 06                   		mov.L	r0, r6
-  20                             	.LCFI1:
+  33                             		.loc 1 19 0
+  34 0000 7E A6                   		push.l	r6
+  35                             	.LCFI0:
+  36 0002 EF 06                   		mov.L	r0, r6
+  37                             	.LCFI1:
+  38                             		.balign 8,3,3
+  39                             	.L2:
   20:../src/main.c ****     // TODO: add application code here
-  21:../src/main.c **** 	dccInit();
-  21                             		.loc 1 21 0
-  22 0004 05 FC FF FF             		bsr	_dccInit
-  23                             		.balign 8,3,3
-  24                             	.L2:
+  21:../src/main.c **** 
   22:../src/main.c ****     while (1) {
   23:../src/main.c ****     	dccPoll();
-  25                             		.loc 1 23 0
-  26 0008 05 F8 FF FF             		bsr	_dccPoll
+  40                             		.loc 1 23 0
+  41 0004 05 FC FF FF             		bsr	_dccPoll
   24:../src/main.c ****     }
-  27                             		.loc 1 24 0
-  28 000c 2E FC                   		bra	.L2
-  29                             	.LFE0:
-  67                             	.Letext0:
+  42                             		.loc 1 24 0
+  43 0008 2E FC                   		bra	.L2
+  44                             	.LFE0:
+  82                             	.Letext0:

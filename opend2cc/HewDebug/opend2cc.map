@@ -1,0 +1,507 @@
+Archive member included because of file (symbol)
+
+libopend2cc.a(malloc.o)       ./src/dcc_link.o (malloc)
+libopend2cc.a(mallocr.o)      libopend2cc.a(malloc.o) (_free_r)
+libopend2cc.a(memmove.o)      libopend2cc.a(mallocr.o) (memmove)
+libopend2cc.a(memset.o)       libopend2cc.a(mallocr.o) (memset)
+libopend2cc.a(mlock.o)        libopend2cc.a(mallocr.o) (__malloc_lock)
+libopend2cc.a(sbrkr.o)        libopend2cc.a(mallocr.o) (_sbrk_r)
+libopend2cc.a(impure.o)       libopend2cc.a(malloc.o) (_impure_ptr)
+libopend2cc.a(reent.o)        libopend2cc.a(sbrkr.o) (errno)
+
+Allocating common symbols
+Common symbol       size              file
+
+dccData             0x4               ./src/dcc_link.o
+errno               0x4               libopend2cc.a(reent.o)
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+LOAD ./src/dcc_link.o
+LOAD ./src/hardware_setup.o
+LOAD ./src/interrupt_handlers.o
+LOAD ./src/librarysupport.o
+LOAD ./src/main.o
+LOAD ./src/reset_program.o
+LOAD ./src/vector_table.o
+LOAD libopend2cc.a
+
+.fvectors       0xffffffa0       0x60
+ *(.fvectors)
+ .fvectors      0xffffffa0       0x60 ./src/vector_table.o
+                0xffffffa0                HardwareVectors
+
+.text           0xfffc0000     0x1608
+ *(.text)
+ .text          0xfffc0000       0x4a ./src/reset_program.o
+                0xfffc0000                PowerON_Reset
+ *(.text.*)
+ *(P)
+ *fill*         0xfffc004a        0x6 00
+ P              0xfffc0050      0x1b8 ./src/dcc_link.o
+                0xfffc0050                dccInit
+                0xfffc0098                dccPoll
+                0xfffc019f                ema
+                0xfffc01de                delay
+                0xfffc01f9                INT_Excep_CMTU0_CMI0
+ P              0xfffc0208        0x7 ./src/hardware_setup.o
+                0xfffc0208                HardwareSetup
+ P              0xfffc020f      0x540 ./src/interrupt_handlers.o
+                0xfffc020f                INT_Excep_SuperVisorInst
+                0xfffc0217                INT_Excep_UndefinedInst
+                0xfffc021f                INT_Excep_FloatingPoint
+                0xfffc0227                INT_NonMaskableInterrupt
+                0xfffc022f                Dummy
+                0xfffc0237                INT_Excep_BRK
+                0xfffc023f                INT_Excep_BUSERR
+                0xfffc0247                INT_Excep_FCU_FCUERR
+                0xfffc024f                INT_Excep_FCU_FRDYI
+                0xfffc0257                INT_Excep_ICU_SWINT
+                0xfffc025f                INT_Excep_CMTU0_CMI1
+                0xfffc0267                INT_Excep_CMTU1_CMI2
+                0xfffc026f                INT_Excep_CMTU1_CMI3
+                0xfffc0277                INT_Excep_ETHER_EINT
+                0xfffc027f                INT_Excep_USB0_D0FIFO0
+                0xfffc0287                INT_Excep_USB0_D1FIFO0
+                0xfffc028f                INT_Excep_USB0_USBI0
+                0xfffc0297                INT_Excep_USB1_D0FIFO1
+                0xfffc029f                INT_Excep_USB1_D1FIFO1
+                0xfffc02a7                INT_Excep_USB1_USBI1
+                0xfffc02af                INT_Excep_RSPI0_SPEIO
+                0xfffc02b7                INT_Excep_RSPI0_SPRI0
+                0xfffc02bf                INT_Excep_RSPI0_SPTI0
+                0xfffc02c7                INT_Excep_RSPI0_SPII0
+                0xfffc02cf                INT_Excep_RSPI1_SPEI1
+                0xfffc02d7                INT_Excep_RSPI1_SPRI1
+                0xfffc02df                INT_Excep_RSPI1_SPTI1
+                0xfffc02e7                INT_Excep_RSPI1_SPII1
+                0xfffc02ef                INT_Excep_CAN0_ERS0
+                0xfffc02f7                INT_Excep_CAN0_RXF0
+                0xfffc02ff                INT_Excep_CAN0_TXF0
+                0xfffc0307                INT_Excep_CAN0_RXM0
+                0xfffc030f                INT_Excep_CAN0_TXM0
+                0xfffc0317                INT_Excep_RTC_PRD
+                0xfffc031f                INT_Excep_RTC_CUP
+                0xfffc0327                INT_Excep_IRQ0
+                0xfffc032f                INT_Excep_IRQ1
+                0xfffc0337                INT_Excep_IRQ2
+                0xfffc033f                INT_Excep_IRQ3
+                0xfffc0347                INT_Excep_IRQ4
+                0xfffc034f                INT_Excep_IRQ5
+                0xfffc0357                INT_Excep_IRQ6
+                0xfffc035f                INT_Excep_IRQ7
+                0xfffc0367                INT_Excep_IRQ8
+                0xfffc036f                INT_Excep_IRQ9
+                0xfffc0377                INT_Excep_IRQ10
+                0xfffc037f                INT_Excep_IRQ11
+                0xfffc0387                INT_Excep_IRQ12
+                0xfffc038f                INT_Excep_IRQ13
+                0xfffc0397                INT_Excep_IRQ14
+                0xfffc039f                INT_Excep_IRQ15
+                0xfffc03a7                INT_Excep_USBR_USBR0
+                0xfffc03af                INT_Excep_USBR_USBR1
+                0xfffc03b7                INT_Excep_RTC_ALM
+                0xfffc03bf                INT_Excep_WDT_WOVI
+                0xfffc03c7                INT_Excep_AD0_ADI0
+                0xfffc03cf                INT_Excep_AD1_ADI1
+                0xfffc03d7                INT_Excep_S12AD_ADI12_0
+                0xfffc03df                INT_Excep_MTU0_TGIA0
+                0xfffc03e7                INT_Excep_MTU0_TGIB0
+                0xfffc03ef                INT_Excep_MTU0_TGICO
+                0xfffc03f7                INT_Excep_MTU0_TGID0
+                0xfffc03ff                INT_Excep_MTU0_TCIV0
+                0xfffc0407                INT_Excep_MTU0_TGIE0
+                0xfffc040f                INT_Excep_MTU0_TGIF0
+                0xfffc0417                INT_Excep_MTU1_TGIA1
+                0xfffc041f                INT_Excep_MTU1_TGIB1
+                0xfffc0427                INT_Excep_MTU1_TCIV1
+                0xfffc042f                INT_Excep_MTU1_TCIU1
+                0xfffc0437                INT_Excep_MTU2_TGIA2
+                0xfffc043f                INT_Excep_MTU2_TGIB2
+                0xfffc0447                INT_Excep_MTU2_TCIV2
+                0xfffc044f                INT_Excep_MTU2_TCIU2
+                0xfffc0457                INT_Excep_MTU3_TGIA3
+                0xfffc045f                INT_Excep_MTU3_TGIB3
+                0xfffc0467                INT_Excep_MTU3_TGIC3
+                0xfffc046f                INT_Excep_MTU3_TGID3
+                0xfffc0477                INT_Excep_MTU3_TCIV3
+                0xfffc047f                INT_Excep_MTU4_TGIA4
+                0xfffc0487                INT_Excep_MTU4_TGIB4
+                0xfffc048f                INT_Excep_MTU4_TGIC4
+                0xfffc0497                INT_Excep_MTU4_TGID4
+                0xfffc049f                INT_Excep_MTU4_TCIV4
+                0xfffc04a7                INT_Excep_MTU5_TGIU5
+                0xfffc04af                INT_Excep_MTU5_TGIV5
+                0xfffc04b7                INT_Excep_MTU5_TGIW5
+                0xfffc04bf                INT_Excep_MTU6_TGIA6
+                0xfffc04c7                INT_Excep_MTU6_TGIB6
+                0xfffc04cf                INT_Excep_MTU6_TGIC6
+                0xfffc04d7                INT_Excep_MTU6_TGID6
+                0xfffc04df                INT_Excep_MTU6_TCIV6
+                0xfffc04e7                INT_Excep_MTU6_TGIE6
+                0xfffc04ef                INT_Excep_MTU6_TGIF6
+                0xfffc04f7                INT_Excep_MTU7_TGIA7
+                0xfffc04ff                INT_Excep_MTU7_TGIB7
+                0xfffc0507                INT_Excep_MTU7_TCIV7
+                0xfffc050f                INT_Excep_MTU7_TCIU7
+                0xfffc0517                INT_Excep_MTU8_TGIA8
+                0xfffc051f                INT_Excep_MTU8_TGIB8
+                0xfffc0527                INT_Excep_MTU8_TCIV8
+                0xfffc052f                INT_Excep_MTU8_TCIU8
+                0xfffc0537                INT_Excep_MTU9_TGIA9
+                0xfffc053f                INT_Excep_MTU9_TGIB9
+                0xfffc0547                INT_Excep_MTU9_TGIC9
+                0xfffc054f                INT_Excep_MTU9_TGID9
+                0xfffc0557                INT_Excep_MTU9_TCIV9
+                0xfffc055f                INT_Excep_MTU10_TGIA10
+                0xfffc0567                INT_Excep_MTU10_TGIB10
+                0xfffc056f                INT_Excep_MTU10_TGIC10
+                0xfffc0577                INT_Excep_MTU10_TGID10
+                0xfffc057f                INT_Excep_MTU10_TCIV10
+                0xfffc0587                INT_Excep_MTU11_TGIU11
+                0xfffc058f                INT_Excep_MTU11_TGIV11
+                0xfffc0597                INT_Excep_MTU11_TGIW11
+                0xfffc059f                INT_Excep_POE_OEI1
+                0xfffc05a7                INT_Excep_POE_OEI2
+                0xfffc05af                INT_Excep_POE_OEI3
+                0xfffc05b7                INT_Excep_POE_OEI4
+                0xfffc05bf                INT_Excep_TMR0_CMIA0
+                0xfffc05c7                INT_Excep_TMR0_CMIB0
+                0xfffc05cf                INT_Excep_TMR0_OVI0
+                0xfffc05d7                INT_Excep_TMR1_CMIA1
+                0xfffc05df                INT_Excep_TMR1_CMIB1
+                0xfffc05e7                INT_Excep_TMR1_OVI1
+                0xfffc05ef                INT_Excep_TMR2_CMIA2
+                0xfffc05f7                INT_Excep_TMR2_CMIB2
+                0xfffc05ff                INT_Excep_TMR2_OVI2
+                0xfffc0607                INT_Excep_TMR3_CMIA3
+                0xfffc060f                INT_Excep_TMR3_CMIB3
+                0xfffc0617                INT_Excep_TMR3_OVI3
+                0xfffc061f                INT_Excep_DMACA_DMAC0I
+                0xfffc0627                INT_Excep_DMACA_DMAC1I
+                0xfffc062f                INT_Excep_DMACA_DMAC2I
+                0xfffc0637                INT_Excep_DMACA_DMAC3I
+                0xfffc063f                INT_Excep_EXDMAC_EXDMAC_0I
+                0xfffc0647                INT_Excep_EXDMAC_EXDMAC_1I
+                0xfffc064f                INT_Excep_SCI0_ERI0
+                0xfffc0657                INT_Excep_SCI0_RXI0
+                0xfffc065f                INT_Excep_SCI0_TXI0
+                0xfffc0667                INT_Excep_SCI0_TEI0
+                0xfffc066f                INT_Excep_SCI1_ERI1
+                0xfffc0677                INT_Excep_SCI1_RXI1
+                0xfffc067f                INT_Excep_SCI1_TXI1
+                0xfffc0687                INT_Excep_SCI1_TEI1
+                0xfffc068f                INT_Excep_SCI2_ERI2
+                0xfffc0697                INT_Excep_SCI2_RXI2
+                0xfffc069f                INT_Excep_SCI2_TXI2
+                0xfffc06a7                INT_Excep_SCI2_TEI2
+                0xfffc06af                INT_Excep_SCI3_ERI3
+                0xfffc06b7                INT_Excep_SCI3_RXI3
+                0xfffc06bf                INT_Excep_SCI3_TXI3
+                0xfffc06c7                INT_Excep_SCI3_TEI3
+                0xfffc06cf                INT_Excep_SCI5_ERI5
+                0xfffc06d7                INT_Excep_SCI5_RXI5
+                0xfffc06df                INT_Excep_SCI5_TXI5
+                0xfffc06e7                INT_Excep_SCI5_TEI5
+                0xfffc06ef                INT_Excep_SCI6_ERI6
+                0xfffc06f7                INT_Excep_SCI6_RXI6
+                0xfffc06ff                INT_Excep_SCI6_TXI6
+                0xfffc0707                INT_Excep_SCI6_TEI6
+                0xfffc070f                INT_Excep_RIIC0_ICEEI0
+                0xfffc0717                INT_Excep_RIIC0_ICRXI0
+                0xfffc071f                INT_Excep_RIIC0_ICTXI0
+                0xfffc0727                INT_Excep_RIIC0_ICTEI0
+                0xfffc072f                INT_Excep_RIIC1_ICEEI1
+                0xfffc0737                INT_Excep_RIIC1_ICRXI1
+                0xfffc073f                INT_Excep_RIIC1_ICTXI1
+                0xfffc0747                INT_Excep_RIIC1_ICTEI1
+ *fill*         0xfffc074f        0x1 00
+ P              0xfffc0750       0x50 ./src/librarysupport.o
+                0xfffc0750                sbrk
+ P              0xfffc07a0       0x10 ./src/main.o
+                0xfffc07a0                main
+ P              0xfffc07b0        0x0 ./src/reset_program.o
+ P              0xfffc07b0        0x0 ./src/vector_table.o
+ P              0xfffc07b0       0x1c libopend2cc.a(malloc.o)
+                0xfffc07b0                malloc
+                0xfffc07be                free
+ *fill*         0xfffc07cc        0x4 00
+ P              0xfffc07d0      0xbb0 libopend2cc.a(mallocr.o)
+                0xfffc07d0                _malloc_trim_r
+                0xfffc0871                _free_r
+                0xfffc0a4c                _malloc_r
+                0xfffc0f73                _calloc_r
+                0xfffc0fd0                _realloc_r
+ P              0xfffc1380       0xc0 libopend2cc.a(memmove.o)
+                0xfffc1380                memmove
+ P              0xfffc1440       0x90 libopend2cc.a(memset.o)
+                0xfffc1440                memset
+ P              0xfffc14d0        0x2 libopend2cc.a(mlock.o)
+                0xfffc14d0                __malloc_lock
+                0xfffc14d1                __malloc_unlock
+ *fill*         0xfffc14d2        0x6 00
+ P              0xfffc14d8       0x28 libopend2cc.a(sbrkr.o)
+                0xfffc14d8                _sbrk_r
+ P              0xfffc1500        0x0 libopend2cc.a(impure.o)
+ P              0xfffc1500      0x108 libopend2cc.a(reent.o)
+                0xfffc1500                cleanup_glue
+                0xfffc151a                _reclaim_reent
+                0xfffc15b9                _wrapup_reent
+                0xfffc1608                etext = .
+
+.rvectors       0xfffc1608      0x400
+                0xfffc1608                _rvectors_start = .
+ *(.rvectors)
+ .rvectors      0xfffc1608      0x400 ./src/vector_table.o
+                0xfffc1608                RelocatableVectors
+                0xfffc1a08                _rvectors_end = .
+
+.init
+ *(.init)
+
+.fini
+ *(.fini)
+
+.got
+ *(.got)
+ *(.got.plt)
+
+.rodata         0xfffc1a08        0xc
+ *(.rodata)
+ *(.rodata.*)
+ .rodata.str1.1
+                0xfffc1a08        0x2 libopend2cc.a(impure.o)
+ *(C_1)
+ *(C_2)
+ *(C)
+ *fill*         0xfffc1a0a        0x2 00
+ C              0xfffc1a0c        0x4 ./src/dcc_link.o
+                0xfffc1a0c                SMA_AVERAGE_N
+ C              0xfffc1a10        0x4 libopend2cc.a(impure.o)
+                0xfffc1a10                _global_impure_ptr
+                0xfffc1a14                _erodata = .
+
+.eh_frame_hdr
+ *(.eh_frame_hdr)
+
+.eh_frame
+ *(.eh_frame)
+
+.jcr
+ *(.jcr)
+
+.tors           0xfffc1a14        0x0
+                0xfffc1a14                __CTOR_LIST__ = .
+                0xfffc1a14                ___ctors = .
+ *(.ctors)
+                0xfffc1a14                ___ctors_end = .
+                0xfffc1a14                __CTOR_END__ = .
+                0xfffc1a14                __DTOR_LIST__ = .
+                0xfffc1a14                ___dtors = .
+ *(.dtors)
+                0xfffc1a14                ___dtors_end = .
+                0xfffc1a14                __DTOR_END__ = .
+                0xfffc1a14                _mdata = .
+
+.istack         0x00001808        0x0
+                0x00001808                _istack = .
+
+.ustack         0x00001708        0x0
+                0x00001708                _ustack = .
+
+.data           0x00001001      0x83f load address 0xfffc1a14
+                0x00001001                _data = .
+ *(.data)
+ *(.data.*)
+ *(D)
+ *fill*         0x00001001        0x3 00
+ D              0x00001004        0x4 ./src/librarysupport.o
+ D              0x00001008      0x410 libopend2cc.a(mallocr.o)
+                0x00001008                __malloc_av_
+                0x00001410                __malloc_trim_threshold
+                0x00001414                __malloc_sbrk_base
+ D              0x00001418      0x428 libopend2cc.a(impure.o)
+                0x00001418                _impure_ptr
+ *(D_1)
+ D_1            0x00001840        0x0 ./src/dcc_link.o
+ D_1            0x00001840        0x0 ./src/hardware_setup.o
+ D_1            0x00001840        0x0 ./src/interrupt_handlers.o
+ D_1            0x00001840        0x0 ./src/librarysupport.o
+ D_1            0x00001840        0x0 ./src/main.o
+ D_1            0x00001840        0x0 ./src/reset_program.o
+ D_1            0x00001840        0x0 ./src/vector_table.o
+ D_1            0x00001840        0x0 libopend2cc.a(malloc.o)
+ D_1            0x00001840        0x0 libopend2cc.a(mallocr.o)
+ D_1            0x00001840        0x0 libopend2cc.a(memmove.o)
+ D_1            0x00001840        0x0 libopend2cc.a(memset.o)
+ D_1            0x00001840        0x0 libopend2cc.a(mlock.o)
+ D_1            0x00001840        0x0 libopend2cc.a(sbrkr.o)
+ D_1            0x00001840        0x0 libopend2cc.a(impure.o)
+ D_1            0x00001840        0x0 libopend2cc.a(reent.o)
+ *(D_2)
+                0x00001840                _edata = .
+
+.gcc_exc
+ *(.gcc_exc)
+
+.bss            0x00001840      0x440 load address 0xfffc2253
+                0x00001840                _bss = .
+ *(.bss)
+ *(.bss.*)
+ *(COMMON)
+ COMMON         0x00001840        0x4 ./src/dcc_link.o
+                0x00001840                dccData
+ COMMON         0x00001844        0x4 libopend2cc.a(reent.o)
+                0x00001844                errno
+ *(B)
+ B              0x00001848        0x4 ./src/dcc_link.o
+                0x00001848                phase
+                0x00001849                waitingForInterrupt
+ B              0x0000184c       0x34 libopend2cc.a(mallocr.o)
+                0x0000184c                __malloc_top_pad
+                0x00001850                __malloc_max_sbrked_mem
+                0x00001854                __malloc_max_total_mem
+                0x00001858                __malloc_current_mallinfo
+ *(B_1)
+ B_1            0x00001880        0x0 ./src/dcc_link.o
+ B_1            0x00001880        0x0 ./src/hardware_setup.o
+ B_1            0x00001880        0x0 ./src/interrupt_handlers.o
+ B_1            0x00001880      0x400 ./src/librarysupport.o
+ B_1            0x00001c80        0x0 ./src/main.o
+ B_1            0x00001c80        0x0 ./src/reset_program.o
+ B_1            0x00001c80        0x0 ./src/vector_table.o
+ B_1            0x00001c80        0x0 libopend2cc.a(malloc.o)
+ B_1            0x00001c80        0x0 libopend2cc.a(mallocr.o)
+ B_1            0x00001c80        0x0 libopend2cc.a(memmove.o)
+ B_1            0x00001c80        0x0 libopend2cc.a(memset.o)
+ B_1            0x00001c80        0x0 libopend2cc.a(mlock.o)
+ B_1            0x00001c80        0x0 libopend2cc.a(sbrkr.o)
+ B_1            0x00001c80        0x0 libopend2cc.a(impure.o)
+ B_1            0x00001c80        0x0 libopend2cc.a(reent.o)
+ *(B_2)
+                0x00001c80                _ebss = .
+                0x00001c80                _end = .
+START GROUP
+LOAD H:\KPIT_Eclipse\workspace\opend2cc\HewDebug\libopend2cc.a
+LOAD C:\Program Files\KPIT Cummins\KPIT-Eclipse\GNURXv10.03-ELF\rx-elf\lib\gcc\rx-elf\4.5-GNURX_v10.03\libgcc.a
+END GROUP
+OUTPUT(opend2cc.x elf32-rx-le)
+
+.debug_abbrev   0x00000000      0x40b
+ .debug_abbrev  0x00000000      0x1a3 ./src/dcc_link.o
+ .debug_abbrev  0x000001a3       0x34 ./src/hardware_setup.o
+ .debug_abbrev  0x000001d7       0x3e ./src/interrupt_handlers.o
+ .debug_abbrev  0x00000215       0xb4 ./src/librarysupport.o
+ .debug_abbrev  0x000002c9       0xc3 ./src/main.o
+ .debug_abbrev  0x0000038c       0x14 ./src/reset_program.o
+ .debug_abbrev  0x000003a0       0x6b ./src/vector_table.o
+
+.debug_info     0x00000000     0x180d
+ .debug_info    0x00000000      0x63c ./src/dcc_link.o
+ .debug_info    0x0000063c       0x50 ./src/hardware_setup.o
+ .debug_info    0x0000068c      0xe5c ./src/interrupt_handlers.o
+ .debug_info    0x000014e8      0x113 ./src/librarysupport.o
+ .debug_info    0x000015fb      0x10b ./src/main.o
+ .debug_info    0x00001706       0x78 ./src/reset_program.o
+ .debug_info    0x0000177e       0x8f ./src/vector_table.o
+
+.debug_line     0x00000000      0x431
+ .debug_line    0x00000000       0x90 ./src/dcc_link.o
+ .debug_line    0x00000090       0x4a ./src/hardware_setup.o
+ .debug_line    0x000000da      0x1ae ./src/interrupt_handlers.o
+ .debug_line    0x00000288       0xcc ./src/librarysupport.o
+ .debug_line    0x00000354       0x4e ./src/main.o
+ .debug_line    0x000003a2       0x59 ./src/reset_program.o
+ .debug_line    0x000003fb       0x36 ./src/vector_table.o
+
+.debug_frame    0x00000000     0x23a8
+ .debug_frame   0x00000000       0xe0 ./src/dcc_link.o
+ .debug_frame   0x000000e0       0x2c ./src/hardware_setup.o
+ .debug_frame   0x0000010c     0x2234 ./src/interrupt_handlers.o
+ .debug_frame   0x00002340       0x3c ./src/librarysupport.o
+ .debug_frame   0x0000237c       0x2c ./src/main.o
+
+.debug_loc      0x00000000     0x1fce
+ .debug_loc     0x00000000      0x10e ./src/dcc_link.o
+ .debug_loc     0x0000010e       0x2c ./src/hardware_setup.o
+ .debug_loc     0x0000013a     0x1e30 ./src/interrupt_handlers.o
+ .debug_loc     0x00001f6a       0x38 ./src/librarysupport.o
+ .debug_loc     0x00001fa2       0x2c ./src/main.o
+
+.debug_pubnames
+                0x00000000     0x1159
+ .debug_pubnames
+                0x00000000       0x95 ./src/dcc_link.o
+ .debug_pubnames
+                0x00000095       0x24 ./src/hardware_setup.o
+ .debug_pubnames
+                0x000000b9     0x1021 ./src/interrupt_handlers.o
+ .debug_pubnames
+                0x000010da       0x1b ./src/librarysupport.o
+ .debug_pubnames
+                0x000010f5       0x27 ./src/main.o
+ .debug_pubnames
+                0x0000111c       0x3d ./src/vector_table.o
+
+.debug_pubtypes
+                0x00000000       0xa5
+ .debug_pubtypes
+                0x00000000       0x2e ./src/dcc_link.o
+ .debug_pubtypes
+                0x0000002e       0x12 ./src/hardware_setup.o
+ .debug_pubtypes
+                0x00000040       0x2b ./src/librarysupport.o
+ .debug_pubtypes
+                0x0000006b       0x21 ./src/main.o
+ .debug_pubtypes
+                0x0000008c       0x19 ./src/vector_table.o
+
+.debug_aranges  0x00000000       0xc0
+ .debug_aranges
+                0x00000000       0x20 ./src/dcc_link.o
+ .debug_aranges
+                0x00000020       0x20 ./src/hardware_setup.o
+ .debug_aranges
+                0x00000040       0x20 ./src/interrupt_handlers.o
+ .debug_aranges
+                0x00000060       0x20 ./src/librarysupport.o
+ .debug_aranges
+                0x00000080       0x20 ./src/main.o
+ .debug_aranges
+                0x000000a0       0x20 ./src/reset_program.o
+
+.debug_str      0x00000000      0xf9f
+ .debug_str     0x00000000      0x15a ./src/dcc_link.o
+                                0x193 (size before relaxing)
+ .debug_str     0x0000015a       0x26 ./src/hardware_setup.o
+                                 0x9c (size before relaxing)
+ .debug_str     0x00000180      0xd8b ./src/interrupt_handlers.o
+                                0xdce (size before relaxing)
+ .debug_str     0x00000f0b       0x48 ./src/librarysupport.o
+                                0x114 (size before relaxing)
+ .debug_str     0x00000f53       0x13 ./src/main.o
+                                 0xe2 (size before relaxing)
+ .debug_str     0x00000f66       0x39 ./src/vector_table.o
+                                 0x8e (size before relaxing)
+
+.comment        0x00000000       0x1c
+ .comment       0x00000000       0x1c ./src/dcc_link.o
+                                 0x1d (size before relaxing)
+ .comment       0x00000000       0x1d ./src/hardware_setup.o
+ .comment       0x00000000       0x1d ./src/interrupt_handlers.o
+ .comment       0x00000000       0x1d ./src/librarysupport.o
+ .comment       0x00000000       0x1d ./src/main.o
+ .comment       0x00000000       0x1d ./src/vector_table.o
+ .comment       0x00000000       0x1d libopend2cc.a(malloc.o)
+ .comment       0x00000000       0x1d libopend2cc.a(mallocr.o)
+ .comment       0x00000000       0x1d libopend2cc.a(memmove.o)
+ .comment       0x00000000       0x1d libopend2cc.a(memset.o)
+ .comment       0x00000000       0x1d libopend2cc.a(mlock.o)
+ .comment       0x00000000       0x1d libopend2cc.a(sbrkr.o)
+ .comment       0x00000000       0x1d libopend2cc.a(impure.o)
+ .comment       0x00000000       0x1d libopend2cc.a(reent.o)

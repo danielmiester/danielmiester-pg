@@ -1,0 +1,335 @@
+   1                             		.file	"dcc_link.c"
+   9                             	.Ltext0:
+  10                             		.comm	_dccData,4,4
+  11                             		.global	_SMA_AVERAGE_N
+  12                             		.section C,"a",@progbits
+  13                             		.p2align 2
+  14                             		.balign 4
+  17                             	_SMA_AVERAGE_N:
+  18 0000 08 00 00 00             		.long	8
+  19                             		.global	_phase
+  20                             		.section B,"w",@nobits
+  21                             		.p2align 2
+  24                             	_phase:
+  25 0000 00                      		.zero	1
+  26                             		.global	_waitingForInterrupt
+  29                             	_waitingForInterrupt:
+  30 0001 00                      		.zero	1
+  31 0002 00 00                   		.section P,"ax"
+  32                             		.global	_dccInit
+  34                             	_dccInit:
+  35                             	.LFB0:
+  36                             		.file 1 "../src/dcc_link.c"
+   1:../src/dcc_link.c **** /* dcc_link.c
+   2:../src/dcc_link.c ****  opend2cc
+   3:../src/dcc_link.c ****  Copyright (C) 2010  Daniel De Jager
+   4:../src/dcc_link.c **** 
+   5:../src/dcc_link.c ****  This program is free software: you can redistribute it and/or modify
+   6:../src/dcc_link.c ****  it under the terms of the GNU General Public License as published by
+   7:../src/dcc_link.c ****  the Free Software Foundation, either version 3 of the License, or
+   8:../src/dcc_link.c ****  (at your option) any later version.
+   9:../src/dcc_link.c **** 
+  10:../src/dcc_link.c ****  This program is distributed in the hope that it will be useful,
+  11:../src/dcc_link.c ****  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  12:../src/dcc_link.c ****  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  13:../src/dcc_link.c ****  GNU General Public License for more details.
+  14:../src/dcc_link.c **** 
+  15:../src/dcc_link.c ****  You should have received a copy of the GNU General Public License
+  16:../src/dcc_link.c ****  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  17:../src/dcc_link.c **** 
+  18:../src/dcc_link.c ****  Daniel De Jager
+  19:../src/dcc_link.c ****  danielmiester at gmail dot com
+  20:../src/dcc_link.c ****  3804 110th Ave. E.
+  21:../src/dcc_link.c ****  Edgewood WA 98372
+  22:../src/dcc_link.c ****  */
+  23:../src/dcc_link.c **** 
+  24:../src/dcc_link.c **** #include "dcc_link.h"
+  25:../src/dcc_link.c **** #include "stdlib.h"
+  26:../src/dcc_link.c **** #include "iodefine.h"
+  27:../src/dcc_link.c **** const int SMA_AVERAGE_N = 8;
+  28:../src/dcc_link.c **** volatile unsigned char phase = 0;
+  29:../src/dcc_link.c **** volatile unsigned char waitingForInterrupt = 0;
+  30:../src/dcc_link.c **** void dccInit(void) {
+  37                             		.loc 1 30 0
+  38 0000 6E 6B                   		pushm	r6-r11
+  39                             	.LCFI0:
+  40 0002 EF 06                   		mov.L	r0, r6
+  41                             	.LCFI1:
+  31:../src/dcc_link.c **** 	dccData = malloc(sizeof(dccdata_td));
+  42                             		.loc 1 31 0
+  43 0004 66 C1                   		mov.L	#12, r1
+  44 0006 05 FA FF FF             		bsr	_malloc
+  45 000a EF 1A                   		mov.L	r1, r10
+  46 000c EF AB                   		mov.L	r10, r11
+  47 000e FB A2 00 00 00 00       		mov.L	#_dccData, r10
+  48 0014 E3 AB                   		mov.L	r11, [r10]
+  32:../src/dcc_link.c **** 	dccData->dc_component = 0;
+  49                             		.loc 1 32 0
+  50 0016 FB A2 00 00 00 00       		mov.L	#_dccData, r10
+  51 001c EC AA                   		mov.L	[r10], r10
+  52 001e F8 A6 00                		mov.L	#0, [r10]
+  33:../src/dcc_link.c **** 	dccData->dc_setting = 0;
+  53                             		.loc 1 33 0
+  54 0021 FB A2 00 00 00 00       		mov.L	#_dccData, r10
+  55 0027 EC AA                   		mov.L	[r10], r10
+  56 0029 F9 A5 02 00             		mov.W	#0, 4[r10]
+  34:../src/dcc_link.c **** 	dccData->power_level = 0;
+  57                             		.loc 1 34 0
+  58 002d FB A2 00 00 00 00       		mov.L	#_dccData, r10
+  59 0033 EC AA                   		mov.L	[r10], r10
+  60 0035 F9 A5 03 00             		mov.W	#0, 6[r10]
+  35:../src/dcc_link.c **** 	dccData->VAL = 0;
+  61                             		.loc 1 35 0
+  62 0039 FB A2 00 00 00 00       		mov.L	#_dccData, r10
+  63 003f EC AA                   		mov.L	[r10], r10
+  64 0041 F9 A4 08 00             		mov.B	#0, 8[r10]
+  36:../src/dcc_link.c **** 
+  37:../src/dcc_link.c **** 
+  38:../src/dcc_link.c **** }
+  65                             		.loc 1 38 0
+  66 0045 3F 6B 06                		rtsd	#24, r6-r11
+  67                             	.LFE0:
+  69                             		.global	_dccPoll
+  71                             	_dccPoll:
+  72                             	.LFB1:
+  39:../src/dcc_link.c **** void dccPoll(void) {
+  73                             		.loc 1 39 0
+  74 0048 6E 6C                   		pushm	r6-r12
+  75                             	.LCFI2:
+  76 004a 71 06 FC                		add	#-4, r0, r6
+  77                             	.LCFI3:
+  78 004d EF 60                   		mov.L	r6, r0
+  79                             	.LCFI4:
+  40:../src/dcc_link.c **** 	if (waitingForInterrupt)
+  80                             		.loc 1 40 0
+  81 004f FB A2 00 00 00 00       		mov.L	#_waitingForInterrupt, r10
+  82 0055 CC AA                   		mov.B	[r10], r10
+  83 0057 5B AA                   		movu.B	r10, r10
+  84 0059 61 0A                   		cmp	#0, r10
+  85 005b 3B F0 00                		bne	.L9
+  86 005e 03                      		nop
+  87 005f 03                      		.balign 8,3,4
+  88                             	.L3:
+  41:../src/dcc_link.c **** 		return;
+  42:../src/dcc_link.c **** 	unsigned short t1 = 100, t2 = 100;
+  89                             		.loc 1 42 0
+  90 0060 3D 60 64                		mov.W	#0x64, [r6]
+  91 0063 3D 61 64                		mov.W	#0x64, 2[r6]
+  43:../src/dcc_link.c **** 	if (dccData->dc_setting > 0) {
+  92                             		.loc 1 43 0
+  93 0066 FB A2 4B 01 00 00       		mov.L	#_dccData, r10
+  94 006c EC AA                   		mov.L	[r10], r10
+  95 006e DD AA 02                		mov.W	4[r10], r10
+  96 0071 DF AA                   		mov.W	r10, r10
+  97 0073 61 0A                   		cmp	#0, r10
+  98 0075 2B 1B                   		ble	.L5
+  99 0077 03                      		nop
+  44:../src/dcc_link.c **** 		t2 += dccData->dc_setting;
+ 100                             		.loc 1 44 0
+ 101 0078 FB A2 90 00 00 00       		mov.L	#_dccData, r10
+ 102 007e EC AA                   		mov.L	[r10], r10
+ 103 0080 DD AA 02                		mov.W	4[r10], r10
+ 104 0083 DF AB                   		mov.W	r10, r11
+ 105 0085 DD 6A 01                		mov.W	2[r6], r10
+ 106 0088 4B BA                   		add	r11, r10
+ 107 008a D7 6A 01                		mov.W	r10, 2[r6]
+ 108 008d FC 13 00                		.balign 8,3,5
+ 109                             	.L5:
+  45:../src/dcc_link.c **** 	}
+  46:../src/dcc_link.c **** 	if (dccData->dc_setting < 0) {
+ 110                             		.loc 1 46 0
+ 111 0090 FB A2 90 00 00 00       		mov.L	#_dccData, r10
+ 112 0096 EC AA                   		mov.L	[r10], r10
+ 113 0098 DD AA 02                		mov.W	4[r10], r10
+ 114 009b DF AA                   		mov.W	r10, r10
+ 115 009d 61 0A                   		cmp	#0, r10
+ 116 009f 28 19                   		bge	.L6
+ 117 00a1 03                      		nop
+  47:../src/dcc_link.c **** 		t1 += dccData->dc_setting;
+ 118                             		.loc 1 47 0
+ 119 00a2 FB A2 B8 00 00 00       		mov.L	#_dccData, r10
+ 120 00a8 EC AA                   		mov.L	[r10], r10
+ 121 00aa DD AA 02                		mov.W	4[r10], r10
+ 122 00ad DF AB                   		mov.W	r10, r11
+ 123 00af DC 6A                   		mov.W	[r6], r10
+ 124 00b1 4B BA                   		add	r11, r10
+ 125 00b3 D3 6A                   		mov.W	r10, [r6]
+ 126 00b5 FC 13 00                		.balign 8,3,4
+ 127                             	.L6:
+  48:../src/dcc_link.c **** 	}
+  49:../src/dcc_link.c **** 	DCC_PORT = phase;
+ 128                             		.loc 1 49 0
+ 129 00b8 FB AE 0D C0 08          		mov.L	#0x8c00d, r10
+ 130 00bd FB B2 B8 00 00 00       		mov.L	#_phase, r11
+ 131 00c3 CC BB                   		mov.B	[r11], r11
+ 132 00c5 64 1B                   		and	#1, r11
+ 133 00c7 64 1B                   		and	#1, r11
+ 134 00c9 CD AC 20                		mov.B	32[r10], r12
+ 135 00cc 75 2C FE                		and	#-2, r12
+ 136 00cf 57 CB                   		or	r12, r11
+ 137 00d1 C7 AB 20                		mov.B	r11, 32[r10]
+  50:../src/dcc_link.c **** 	if (dccData->DATA) {
+ 138                             		.loc 1 50 0
+ 139 00d4 FB A2 B8 00 00 00       		mov.L	#_dccData, r10
+ 140 00da EC AA                   		mov.L	[r10], r10
+ 141 00dc ED AA 02                		mov.L	8[r10], r10
+ 142 00df 64 1A                   		and	#1, r10
+ 143                             		; Compare Eliminated: cmp #0, r10
+ 144 00e1 20 27                   		beq	.L7
+ 145 00e3 03                      		nop
+  51:../src/dcc_link.c **** 		delay((unsigned short)58);
+ 146                             		.loc 1 51 0
+ 147 00e4 75 41 3A                		mov	#58, r1
+ 148 00e7 05 21 00 00             		bsr	_delay
+  52:../src/dcc_link.c **** 		ema(0);
+ 149                             		.loc 1 52 0
+ 150 00eb 66 01                   		mov.L	#0, r1
+ 151 00ed 05 1B 00 00             		bsr	_ema
+  53:../src/dcc_link.c **** 		phase++;
+ 152                             		.loc 1 53 0
+ 153 00f1 FB A2 08 01 00 00       		mov.L	#_phase, r10
+ 154 00f7 CC AA                   		mov.B	[r10], r10
+ 155 00f9 62 1A                   		add	#1, r10
+ 156 00fb CF AB                   		mov.B	r10, r11
+ 157 00fd FB A2 08 01 00 00       		mov.L	#_phase, r10
+ 158 0103 C3 AB                   		mov.B	r11, [r10]
+  54:../src/dcc_link.c **** 		return;
+ 159                             		.loc 1 54 0
+ 160 0105 2E 47                   		bra	.L2
+ 161 0107 03                      		.balign 8,3,5
+ 162                             	.L7:
+  55:../src/dcc_link.c **** 	} else {
+  56:../src/dcc_link.c **** 		if (phase)
+ 163                             		.loc 1 56 0
+ 164 0108 FB A2 4C 01 00 00       		mov.L	#_phase, r10
+ 165 010e CC AA                   		mov.B	[r10], r10
+ 166 0110 5B AA                   		movu.B	r10, r10
+ 167 0112 61 0A                   		cmp	#0, r10
+ 168 0114 20 0C                   		beq	.L8
+ 169 0116 03                      		nop
+  57:../src/dcc_link.c **** 			delay(t1);
+ 170                             		.loc 1 57 0
+ 171 0117 DC 61                   		mov.W	[r6], r1
+ 172 0119 05 07 00 00             		bsr	_delay
+ 173 011d 2E 2F                   		bra	.L2
+ 174 011f 03                      		.balign 8,3,1
+ 175                             	.L8:
+  58:../src/dcc_link.c **** 		else {
+  59:../src/dcc_link.c **** 			delay(t2);
+ 176                             		.loc 1 59 0
+ 177 0120 98 69                   		mov.W	2[r6], r1
+ 178 0122 05 2A 00 00             		bsr	_delay
+  60:../src/dcc_link.c **** 			ema(t2 - t1);
+ 179                             		.loc 1 60 0
+ 180 0126 5D 6B 01                		movu.W	2[r6], r11
+ 181 0129 5C 6A                   		movu.W	[r6], r10
+ 182 012b FF 0A AB                		sub	r10, r11, r10
+ 183 012e EF A1                   		mov.L	r10, r1
+ 184 0130 05 1C 00 00             		bsr	_ema
+  61:../src/dcc_link.c **** 
+  62:../src/dcc_link.c **** 			phase++;
+ 185                             		.loc 1 62 0
+ 186 0134 FB A2 4C 01 00 00       		mov.L	#_phase, r10
+ 187 013a CC AA                   		mov.B	[r10], r10
+ 188 013c 62 1A                   		add	#1, r10
+ 189 013e CF AB                   		mov.B	r10, r11
+ 190 0140 FB A2 4C 01 00 00       		mov.L	#_phase, r10
+ 191 0146 C3 AB                   		mov.B	r11, [r10]
+  63:../src/dcc_link.c **** 			return;
+ 192                             		.loc 1 63 0
+ 193 0148 03                      		nop
+ 194 0149 2E 03                   		bra	.L2
+ 195                             	.L9:
+  41:../src/dcc_link.c **** 		return;
+ 196                             		.loc 1 41 0
+ 197 014b 03                      		nop
+ 198                             		.balign 8,3,2
+ 199                             	.L2:
+  64:../src/dcc_link.c **** 		}
+  65:../src/dcc_link.c **** 
+  66:../src/dcc_link.c **** 	}
+  67:../src/dcc_link.c **** }
+ 200                             		.loc 1 67 0
+ 201 014c 3F 6C 08                		rtsd	#32, r6-r12
+ 202                             	.LFE1:
+ 204                             		.global	_ema
+ 206                             	_ema:
+ 207                             	.LFB2:
+  68:../src/dcc_link.c **** inline void ema(int newVal) {
+ 208                             		.loc 1 68 0
+ 209 014f 6E 6C                   		pushm	r6-r12
+ 210                             	.LCFI5:
+ 211 0151 71 06 FC                		add	#-4, r0, r6
+ 212                             	.LCFI6:
+ 213 0154 EF 60                   		mov.L	r6, r0
+ 214                             	.LCFI7:
+ 215 0156 E3 61                   		mov.L	r1, [r6]
+  69:../src/dcc_link.c **** 	dccData->dc_component = newVal + dccData->dc_component * 3;
+ 216                             		.loc 1 69 0
+ 217 0158 FB A2 4C 01 00 00       		mov.L	#_dccData, r10
+ 218 015e EC AC                   		mov.L	[r10], r12
+ 219 0160 FB A2 4C 01 00 00       		mov.L	#_dccData, r10
+ 220 0166 EC AA                   		mov.L	[r10], r10
+ 221 0168 EC AA                   		mov.L	[r10], r10
+ 222 016a EF AB                   		mov.L	r10, r11
+ 223 016c 4B BB                   		add	r11, r11
+ 224 016e 4B BA                   		add	r11, r10
+ 225 0170 06 88 6A                		add	[r6].L, r10
+ 226 0173 E3 CA                   		mov.L	r10, [r12]
+  70:../src/dcc_link.c **** 	dccData->dc_component >>= 2;
+ 227                             		.loc 1 70 0
+ 228 0175 FB A2 4C 01 00 00       		mov.L	#_dccData, r10
+ 229 017b EC AA                   		mov.L	[r10], r10
+ 230 017d FB B2 4C 01 00 00       		mov.L	#_dccData, r11
+ 231 0183 EC BB                   		mov.L	[r11], r11
+ 232 0185 EC BB                   		mov.L	[r11], r11
+ 233 0187 6A 2B                   		shar	#2, r11
+ 234 0189 E3 AB                   		mov.L	r11, [r10]
+  71:../src/dcc_link.c **** }
+ 235                             		.loc 1 71 0
+ 236 018b 3F 6C 08                		rtsd	#32, r6-r12
+ 237                             	.LFE2:
+ 239                             		.global	_delay
+ 241                             	_delay:
+ 242                             	.LFB3:
+  72:../src/dcc_link.c **** inline void delay(unsigned short usecs) {
+ 243                             		.loc 1 72 0
+ 244 018e 7E AA                   		push.l	r10
+ 245                             	.LCFI8:
+ 246 0190 7E A6                   		push.l	r6
+ 247                             	.LCFI9:
+ 248 0192 71 06 FC                		add	#-4, r0, r6
+ 249                             	.LCFI10:
+ 250 0195 EF 60                   		mov.L	r6, r0
+ 251                             	.LCFI11:
+ 252 0197 D3 61                   		mov.W	r1, [r6]
+  73:../src/dcc_link.c **** 	//setcount();
+  74:../src/dcc_link.c **** 	//enableTimer
+  75:../src/dcc_link.c **** 	waitingForInterrupt = 1;
+ 253                             		.loc 1 75 0
+ 254 0199 FB A2 4C 01 00 00       		mov.L	#_waitingForInterrupt, r10
+ 255 019f F8 A4 01                		mov.B	#1, [r10]
+  76:../src/dcc_link.c **** }
+ 256                             		.loc 1 76 0
+ 257 01a2 62 40                   		add	#4, r0
+ 258 01a4 7E B6                   		pop	r6
+ 259 01a6 7E BA                   		pop	r10
+ 260 01a8 02                      		rts
+ 261                             	.LFE3:
+ 263                             		.global	_INT_Excep_CMTU0_CMI0
+ 265                             	_INT_Excep_CMTU0_CMI0:
+ 266                             	.LFB4:
+  77:../src/dcc_link.c **** void INT_Excep_CMTU0_CMI0(void){
+ 267                             		.loc 1 77 0
+ 268                             		; Note: Interrupt Handler
+ 269 01a9 6E 1F                   		pushm	r1-r15
+ 270                             	.LCFI12:
+ 271 01ab EF 06                   		mov.L	r0, r6
+ 272                             	.LCFI13:
+  78:../src/dcc_link.c **** 
+  79:../src/dcc_link.c **** }
+ 273                             		.loc 1 79 0
+ 274 01ad 6F 1F                   		popm	r1-r15
+ 275 01af 7F 95                   		rte
+ 276                             	.LFE4:
+ 469                             	.Letext0:
