@@ -6,6 +6,7 @@
  */
 #ifndef MAIN_H
 #define MAIN_H
+#include "WProgram.h"
 #ifdef __cplusplus
 extern "C"{
 #endif

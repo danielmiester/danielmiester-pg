@@ -5,15 +5,10 @@
  *      Author: dejagerd
  */
 #include "ADC.h"
-//#include <stdlib.h>
-#include "WProgram.h"
-#include "wiring_private.h"
-//#include "util/atomic.h"
-//#include <limits.h>
 //char ADCchannel = 0;
 //volatile int ADCData[2] = {0,0};
 volatile uint16_t ADCdata[ADC_CHANNELS];// = {0,0};
-//uint8_t low,high,channel;
+//volatile uint8_t low,high,channel;
 
 
 void ADCinit() {
