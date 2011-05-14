@@ -8,6 +8,8 @@
 #ifndef ADC_H_
 #define ADC_H_
 #include "WProgram.h"
+#include "wiring_private.h"
+
 #ifdef __cplusplus
 extern "C"{
 #endif
@@ -20,7 +22,7 @@ extern "C"{
 //uint8_t ADCchannel = 0;
 extern volatile uint16_t ADCdata[];
 extern volatile uint8_t ADCdataFresh;
-volatile uint8_t low,high,channel;
+volatile static uint8_t low,high,channel;
 
 void ADCinit();
 void ADCstart();
