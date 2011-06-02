@@ -7,13 +7,14 @@
 
 #ifndef RPM_H_
 #define RPM_H_
-#include "WProgram.h"
+#include "commonincludes.h"
 #ifdef __cplusplus
 extern "C" {
 #endif
 //extern volatile uint8_t seconds;
 extern volatile uint16_t event1;
 extern volatile uint16_t event2;
+extern volatile uint8_t tick;
 void RPMinit();
 uint16_t RPMgetSpeed();
 
