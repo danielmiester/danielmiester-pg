@@ -7,12 +7,12 @@
 
 #ifndef PWM_H_
 #define PWM_H_
-#include "WProgram.h"
-#include "avr/sfr_defs.h"
-#include "avr/io.h"
+#include "commonincludes.h"
+
 #ifdef __cplusplus
 extern "C"{
 #endif
+#define PWMdutyCycle OCR0B
 void PWMinit();
 void PWMsetDutyCycle(uint8_t) __attribute__((always_inline));
 uint8_t PWMgetDutyCycle() __attribute__((always_inline));
