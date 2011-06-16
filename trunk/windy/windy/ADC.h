@@ -19,16 +19,16 @@ extern "C"{
 //#define ADC_2NDCONVERSION_CYCLES 13 * CLOCKCYCLES_PER_ADC_CYCLE
 //#define ADC_1ST_CONVERSION_DELAY clockCyclesToMicroseconds((ADC_1STCONVERSION_CYCLES))
 //#define ADC_2ND_CONVERSION_DELAY clockCyclesToMicroseconds((ADC_2NDCONVERSION_CYCLES))
-#define BANDGAP 1.092
+#define BANDGAP 1.08
 extern volatile int32_t ADCdata[];
 extern volatile uint8_t ADCdataFresh;
+extern volatile uint16_t ticks;
 static volatile  uint8_t channel;
 extern int16_t ADCVref;
 
 void ADCinit();
 void ADCstart();
-void ADCcalibrate();
-float ADCgetAVREF();
+
 #ifdef __cplusplus
 }
 #endif

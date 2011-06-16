@@ -8,14 +8,17 @@
 
 void PWMinit(){
 	TCCR0A 	= 0
-			| _BV(COM0A1)//clear OC0B on compare match
+			| _BV(COM0B0)
+			| _BV(COM0B1)//set OC0B on compare match
 			|_BV(WGM01)		//set timer mode 7 (fastpwm /w OCRA as TOP) Bit1
 			|_BV(WGM00);	//Bit0
-	OCR0A	= 0xff;			//Timer runs at 16MHz/256 = ~ 62kHz
+	OCR0A	= 255;			//Timer runs at 16MHz/256 = ~ 62kHz
 	TCCR0B 	= 0
 			|_BV(WGM02)		//set timer mode 7 (fastpwm /w OCRA as TOP) Bit2
 			|_BV(CS00); 	//set clock source no scaling
-	DDRD 	= 0x40; 		//enable output on pwm pin
+	DDRD 	= 0x60; 		//enable output on pwm pin
+	PORTD	&= ~0x60;
+	OCR0B	= 0x80;
 }
 void PWMsetDutyCycle(uint8_t duty){
 	OCR0B = duty;
