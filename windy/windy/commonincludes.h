@@ -18,6 +18,8 @@
 #include <ctype.h>
 #include <inttypes.h>
 #include <math.h>
+#include <avr/pgmspace.h>
+
 
 #define lowByte(w) ((uint8_t) ((w) & 0xff))
 #define highByte(w) ((uint8_t) ((w) >> 8))

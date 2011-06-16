@@ -10,58 +10,53 @@
 #include "PWM.h"
 #include "RPM.h"
 #include "serial.h"
-#include <avr/pgmspace.h>
-char string_1[] PROGMEM = "\e[2JBuild: " __DATE__ " " __TIME__ "\n"
-"voltage\t|current\t|power\t\n";
-char string_2[] PROGMEM = "\e[3;0H"
-	"% 1.4g|% 1.4g|% 1.4g\e[K";
-PGM_P string_table[] PROGMEM = { string_1, string_2, };
+volatile uint16_t ticks;
+char string_1[] PROGMEM = "\e[2J" __TIMESTAMP__;
+char string_2[] PROGMEM = "\e[2;0H"
+	"%7.4gv|%7.4gA|%7.4gW|%7.4gRPM|%7.4gdW|%7.4gdRPM|%7d\e[K";
 
 void init(void) {
 	sei();
 	UCSR0B = 0;
 	Serial57600();
-	buffer = (char*) malloc(strlen_P((PGM_P) pgm_read_word(&string_table[0])));
-	strcpy_P(buffer, (char*) pgm_read_word(&(string_table[0])));
-	printf(buffer);
+	printf_P(string_1);
 	ADCinit();
-	ADCcalibrate();
-	Vref = ADCgetAVREF();
 	ADCstart();
 	PWMinit();
-	DDRB = 0x20;
-	PORTB = 0x1;
 	RPMinit();
-	DDRC = 0;
-	PORTC = 0x3;
+	PWMdutyCycle = 128;
 
 }
 
 void main(void) {
 
-	buffer = (char*) malloc(strlen_P((PGM_P) pgm_read_word(&string_table[1])));
-	strcpy_P(buffer, (char*) pgm_read_word(&(string_table[1])));
 	for (;;) {
+		lastrpm = rpm;
 		rpm = 62500.0 / RPMgetSpeed();//62500 ticks/sec; 60secs/min; x10 to get a decimal place.
-		voltage = ADCdata[VOLTAGE] / 1024.0 * Vref;
-		current = ADCdata[CURRENT] / 1024.0 * Vref - 2.55;
+		voltage = MAPADC(ADCdata[VOLTAGE],0,30);
+		current = MAPADC(ADCdata[CURRENT],-2.5,2.5);
 		EMA(voltage2,voltage,16);
 		EMA(current2,current,16);
+		EMA(deltarpm,rpm-lastrpm,16);
+		EMA(deltapower,power-lastpower,16);
+		lastpower = power;
 		power = voltage2 * current2;
-		if (power - lastPower > hysteresis) {
+		if (((power - lastpower) > hysteresis) && PWMdutyCycle) {
 			PWMdutyCycle--;
-		} else if (lastPower - power > hysteresis) {
+		} else if (lastpower - power > hysteresis) {
 			PWMdutyCycle++;
 		}
+		PWMdutyCycle = (PWMdutyCycle > 192) ? 192 : PWMdutyCycle;
 
 		if (ADCdataFresh >= 3) {
 			ADCdataFresh = 0;
 			ADCstart();
 		}
-
-		if (tick > 0) {
-			tick = 0;
-			printf(buffer, voltage2, current2, power);
+		if (ticks >= 1500) {
+			ticks = 0;
+			printf_P(string_2, voltage2, current2, power, rpm, deltapower,
+					deltarpm,PWMdutyCycle);
 		}
+
 	}
 }

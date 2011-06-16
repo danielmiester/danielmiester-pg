@@ -23,7 +23,7 @@
 							<option id="de.innot.avreclipse.toolchain.options.toolchain.objdump.app.debug.2040088591" name="Generate Extended Listing (Source + generated Assembler)" superClass="de.innot.avreclipse.toolchain.options.toolchain.objdump.app.debug"/>
 							<option id="de.innot.avreclipse.toolchain.options.toolchain.size.app.debug.1549535710" name="Print Size" superClass="de.innot.avreclipse.toolchain.options.toolchain.size.app.debug" value="true" valueType="boolean"/>
 							<option id="de.innot.avreclipse.toolchain.options.toolchain.avrdude.app.debug.684868834" name="AVRDude" superClass="de.innot.avreclipse.toolchain.options.toolchain.avrdude.app.debug" value="false" valueType="boolean"/>
-							<targetPlatform id="de.innot.avreclipse.targetplatform.winavr.app.debug.1242125195" name="AVR Cross-Target" superClass="de.innot.avreclipse.targetplatform.winavr.app.debug"/>
+							<targetPlatform binaryParser="org.eclipse.cdt.core.ELF" id="de.innot.avreclipse.targetplatform.winavr.app.debug.1242125195" name="AVR Cross-Target" superClass="de.innot.avreclipse.targetplatform.winavr.app.debug"/>
 							<builder buildPath="${workspace_loc:/windy/Debug}" enableAutoBuild="true" id="de.innot.avreclipse.target.builder.winavr.app.debug.1056377800" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="AVR GNU Make Builder" parallelBuildOn="false" parallelizationNumber="-1" superClass="de.innot.avreclipse.target.builder.winavr.app.debug"/>
 							<tool id="de.innot.avreclipse.tool.assembler.winavr.app.debug.843066610" name="AVR Assembler" superClass="de.innot.avreclipse.tool.assembler.winavr.app.debug">
 								<option id="de.innot.avreclipse.assembler.option.debug.level.739110624" name="Generate Debugging Info" superClass="de.innot.avreclipse.assembler.option.debug.level"/>
@@ -35,7 +35,7 @@
 							<tool id="de.innot.avreclipse.tool.compiler.winavr.app.debug.2109231374" name="AVR Compiler" superClass="de.innot.avreclipse.tool.compiler.winavr.app.debug">
 								<option id="de.innot.avreclipse.compiler.option.debug.level.986257810" name="Generate Debugging Info" superClass="de.innot.avreclipse.compiler.option.debug.level"/>
 								<option id="de.innot.avreclipse.compiler.option.optimize.754336472" name="Optimization Level" superClass="de.innot.avreclipse.compiler.option.optimize" value="de.innot.avreclipse.compiler.optimize.size" valueType="enumerated"/>
-								<option id="de.innot.avreclipse.compiler.option.otherflags.1009748023" name="Other flags" superClass="de.innot.avreclipse.compiler.option.otherflags" value="-W --freestanding -pedantic -Wl,relax,--gc-sections" valueType="string"/>
+								<option id="de.innot.avreclipse.compiler.option.otherflags.1009748023" name="Other flags" superClass="de.innot.avreclipse.compiler.option.otherflags" value="-W --freestanding -pedantic -Wl,relax,--gc-sections -save-temps" valueType="string"/>
 								<option id="de.innot.avreclipse.compiler.option.incpath.1922830394" name="Include Paths (-I)" superClass="de.innot.avreclipse.compiler.option.incpath" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/windy}&quot;"/>
 								</option>

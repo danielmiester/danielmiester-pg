@@ -10,26 +10,36 @@
 #ifdef __cplusplus
 #define filterpower 2
 #define filterlength 2<<filterpower
-extern "C"{
+extern "C" {
 #endif
-void init(void) __attribute__ ((naked,section (".init8")));
-void main() __attribute__ ((noreturn));
+#define Vref 5.0
 #define VOLTAGE 0
 #define CURRENT 1
-#define hysteresis 1
+#define hysteresis .00001
+/**
+ * Exponential Moving Average function
+ * takes the form of
+ * STORAGE = (INPUT + INPUT*(SAMPLES -1))/SAMPLES
+ */
+#define EMA(STORAGE,INPUT,SAMPLES) \
+	(STORAGE) = fma((STORAGE), (SAMPLES) - 1.0,(INPUT));\
+	(STORAGE) /= (SAMPLES)
+#define MAPADC(IN,MIN,MAX) ((IN) * ((MAX) - (MIN))) / (1024) + (MIN)
+
+
+void init(void) __attribute__ ((naked,section (".init8")));
+void main() __attribute__ ((noreturn));
+
 float voltage;
 float voltage2;
 float current;
 float current2;
 float power;
 float rpm;
-float lastPower;
-float Vref;
-char * buffer;
-#define EXPO(VAL) ((int32_t)((int8_t)((VAL)+127))<<23)
-#define EMA(STORAGE,INPUT,OVERSAMPLE) (STORAGE) = fma((STORAGE),\
-		(OVERSAMPLE) - 1.0,(INPUT));\
-	(STORAGE) /= (OVERSAMPLE)
+float lastrpm;
+float lastpower;
+float deltarpm;
+float deltapower;
 
 #ifdef __cplusplus
 }

@@ -1,4 +1,4 @@
-#Wed May 18 20:33:11 PDT 2011
+#Sun Jun 05 16:43:43 PDT 2011
 avrtarget/ClockFrequency=16000000
 avrtarget/ExtRAMSize=0
 avrtarget/ExtendedRAM=false
@@ -8,7 +8,7 @@ avrtarget/UseExtendedRAMforHeap=true
 avrtarget/avrdude/BitBangDelay=
 avrtarget/avrdude/Bitclock=
 avrtarget/avrdude/EEPROMFile=
-avrtarget/avrdude/EEPROMFromConfig=true
+avrtarget/avrdude/EEPROMFromConfig=false
 avrtarget/avrdude/FlashFile=
 avrtarget/avrdude/FlashFromConfig=true
 avrtarget/avrdude/Fuses/ByteValues=255\:221\:7
@@ -27,7 +27,7 @@ avrtarget/avrdude/NoVerify=false
 avrtarget/avrdude/NoWrite=false
 avrtarget/avrdude/OtherOptions=
 avrtarget/avrdude/ProgrammerID=programmerconfig.2
-avrtarget/avrdude/UseCounter=false
+avrtarget/avrdude/UseCounter=true
 avrtarget/avrdude/WriteEEPROM=false
 avrtarget/avrdude/WriteFlash=true
 avrtarget/perConfig=false
