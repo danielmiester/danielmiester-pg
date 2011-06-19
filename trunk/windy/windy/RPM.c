@@ -19,7 +19,7 @@ void RPMinit() {
 	OCR1A = 0xffff;//62499; //to get an overflow 1/sec;
 	TIMSK1 = 0 | _BV(ICIE1) //enable counter match
 	;
-	TCCR1B |= _BV(CS12);// | _BV(CS10); //enable timer at CLKio/256
+	TCCR1B |= _BV(CS11)|_BV(CS10);// | _BV(CS10); //enable timer at CLKio/256
 }
 uint16_t RPMgetSpeed() {
 	return event2 - event1;

@@ -16,7 +16,7 @@ void Serial57600() {
 	bitSet(PORTD,1);//set D[1] HIGH;
 	_delay_ms(1000);//delay 1s to send break;
 #define BAUD 57600
-#define F_CPU 16000000UL
+#define F_CPU 8000000UL
 #include <util/setbaud.h>
 	UBRR0H = UBRRH_VALUE;
 	UBRR0L = UBRRL_VALUE;

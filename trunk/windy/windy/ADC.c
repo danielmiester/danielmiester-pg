@@ -25,7 +25,7 @@ void ADCinit() {
 	}
 
 	ADCSRA = _BV(ADEN) //enable ADC
-			| 6; //prescale by 64 for ADC speed of 250kHz
+			| 5; //prescale by 32 for ADC speed of 250kHz
 }
 void ADCstart() {
 	ADCSRA |= _BV(ADSC) //trigger conversion;
