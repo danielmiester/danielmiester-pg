@@ -13,7 +13,7 @@
 volatile uint16_t ticks;
 char string_1[] PROGMEM = "\e[2J" __TIMESTAMP__;
 char string_2[] PROGMEM = "\e[2;0H"
-	"%7.4gv|%7.4gA|%7.4gW|%7.4gRPM|%7.4gdW|%7.4gdRPM|%7d\e[K";
+	"%7.4gv|%7.4gA|%7.4gW|%7.4gRPM|%7.4gdW|%7.4gdRPM|%7u\e[K";
 
 void init(void) {
 	sei();
@@ -24,7 +24,8 @@ void init(void) {
 	ADCstart();
 	PWMinit();
 	RPMinit();
-	PWMdutyCycle = 128;
+	PWMdutyCycle = 1;
+	duty = PWMdutyCycle<<8;
 
 }
 
@@ -41,12 +42,14 @@ void main(void) {
 		EMA(deltapower,power-lastpower,16);
 		lastpower = power;
 		power = voltage2 * current2;
-		if (((power - lastpower) > hysteresis) && PWMdutyCycle) {
-			PWMdutyCycle--;
+		if (((power - lastpower) > hysteresis) && duty) {
+			duty-=128;
 		} else if (lastpower - power > hysteresis) {
-			PWMdutyCycle++;
+			duty+=128;
 		}
-		PWMdutyCycle = (PWMdutyCycle > 192) ? 192 : PWMdutyCycle;
+
+		duty = (duty > 49152) ? (uint16_t)49152 : duty;
+		PWMdutyCycle = duty>>8;
 
 		if (ADCdataFresh >= 3) {
 			ADCdataFresh = 0;
@@ -55,7 +58,7 @@ void main(void) {
 		if (ticks >= 1500) {
 			ticks = 0;
 			printf_P(string_2, voltage2, current2, power, rpm, deltapower,
-					deltarpm,PWMdutyCycle);
+					deltarpm,duty);
 		}
 
 	}

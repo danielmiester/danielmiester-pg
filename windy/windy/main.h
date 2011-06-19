@@ -40,6 +40,7 @@ float lastrpm;
 float lastpower;
 float deltarpm;
 float deltapower;
+uint16_t duty;
 
 #ifdef __cplusplus
 }
